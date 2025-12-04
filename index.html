@@ -4,19 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEWS Polit 2 | iOS Style Animated</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* --- CSS: Стили и Анимации (Остаются без изменений) --- */
+        /* --- CSS: Стили, Анимации и Темы --- */
         :root {
+            /* ТЕМНАЯ ТЕМА (DARK MODE - по умолчанию) */
             --primary-blue: #007AFF;
             --accent-glow: #0A84FF;
             --text-main: #ffffff;
             --text-muted: rgba(255, 255, 255, 0.6);
+            --bg-color: #050505;
             --glass-bg: rgba(20, 20, 20, 0.65);
             --glass-border: rgba(255, 255, 255, 0.12);
             --blur-amount: 20px;
             --bubble-radius: 24px;
+
+            /* Градиент для фона */
+            --background-gradient: radial-gradient(circle at 10% 20%, #001a4d 0%, #000000 40%),
+                                   radial-gradient(circle at 90% 80%, #002b80 0%, #000000 40%),
+                                   var(--bg-color);
         }
 
+        /* --- СВЕТЛАЯ ТЕМА (LIGHT MODE) --- */
+        body.light-mode {
+            --text-main: #000000;
+            --text-muted: rgba(0, 0, 0, 0.6);
+            --bg-color: #f0f0f5;
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(0, 0, 0, 0.12);
+            --background-gradient: radial-gradient(circle at 10% 20%, #e0f0ff 0%, #ffffff 40%),
+                                   radial-gradient(circle at 90% 80%, #f0f0ff 0%, #ffffff 40%),
+                                   var(--bg-color);
+        }
+        
+        /* Общие стили */
         * {
             margin: 0;
             padding: 0;
@@ -24,23 +45,23 @@
         }
 
         body {
-            background: radial-gradient(circle at 10% 20%, #001a4d 0%, #000000 40%),
-                        radial-gradient(circle at 90% 80%, #002b80 0%, #000000 40%),
-                        #050505;
+            background: var(--background-gradient);
             background-attachment: fixed;
             color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.5;
             padding-bottom: 40px;
             scroll-behavior: smooth;
+            transition: background-color 0.5s, color 0.5s; /* Плавный переход темы */
         }
 
-        a, .glass-panel, .card {
+        a, .glass-panel, .card, button {
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         a { text-decoration: none; color: inherit; }
 
+        /* Эффект СТЕКЛА */
         .glass-panel {
             background: var(--glass-bg);
             backdrop-filter: blur(var(--blur-amount));
@@ -50,8 +71,16 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
+        /* --- ШАПКА --- */
         header {
-            position: sticky; top: 20px; z-index: 100; margin: 0 20px; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            margin: 0 20px;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         .logo { font-size: 1.8rem; font-weight: 900; letter-spacing: -0.5px; }
@@ -61,6 +90,7 @@
         nav a { font-weight: 600; font-size: 1.1rem; opacity: 0.8; }
         nav a:hover { opacity: 1; color: var(--primary-blue); transform: scale(1.05); }
 
+        /* --- БЕГУЩАЯ СТРОКА --- */
         .ticker-container { margin: 20px; padding: 10px 20px; overflow: hidden; display: flex; align-items: center; }
         .ticker-text { white-space: nowrap; animation: ticker 25s linear infinite; font-weight: 700; font-size: 0.95rem; color: var(--accent-glow); }
         @keyframes ticker {
@@ -68,11 +98,12 @@
             100% { transform: translateX(-100%); }
         }
 
+        /* --- ГЛАВНАЯ СЕКЦИЯ (GRID) --- */
         .hero { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; padding: 0 20px; }
         
         .main-article {
             min-height: 500px; position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 40px;
-            background: url('https://source.unsplash.com/random/1200x800/?sad,blue') center/cover no-repeat; /* Поменял картинку на более нейтральную */
+            background: url('https://source.unsplash.com/random/1200x800/?sad,blue') center/cover no-repeat;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
         .main-article:hover { box-shadow: 0 0 50px rgba(0, 122, 255, 0.5); }
@@ -82,16 +113,15 @@
         .tag { background-color: var(--primary-blue); padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 15px; display: inline-block; box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4); }
         .main-article h1 { font-size: 3rem; font-weight: 900; line-height: 1.1; margin-bottom: 15px; letter-spacing: -1px; }
         .main-article p { font-size: 1.2rem; font-weight: 500; color: rgba(255,255,255,0.9); max-width: 80%; }
+        body.light-mode .main-article p { color: rgba(0, 0, 0, 0.9); } /* Адаптация текста в Light Mode */
 
         .sidebar { padding: 30px; display: flex; flex-direction: column; gap: 20px; }
         .sidebar h3 { font-size: 1.5rem; font-weight: 800; color: var(--primary-blue); margin-bottom: 10px; }
-        .news-item { padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .news-item { padding-bottom: 15px; border-bottom: 1px solid var(--glass-border); }
         .news-item a:hover h4 { color: var(--primary-blue); }
 
-        @keyframes fadeInSlideUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        /* --- Сетка и Карточки --- */
+        @keyframes fadeInSlideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 
         .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; padding: 20px; margin-top: 10px; }
 
@@ -111,21 +141,96 @@
         .card-body h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 10px; line-height: 1.2; }
         .card-body p { font-size: 0.95rem; color: var(--text-muted); font-weight: 500; margin-bottom: 20px; }
 
-        .btn-read { display: inline-block; color: #fff; background: rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 12px; font-weight: 700; font-size: 0.9rem; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .btn-read { display: inline-block; color: var(--text-main); background: var(--glass-border); padding: 10px 20px; border-radius: 12px; font-weight: 700; font-size: 0.9rem; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .btn-read:hover { background: var(--primary-blue); box-shadow: 0 4px 10px var(--primary-blue); transform: translateY(-2px); }
         .btn-read:active { transform: translateY(0); box-shadow: none; background: #005bb5; }
+        
+        /* --- СЕКЦИЯ НАСТРОЕК --- */
+        .settings-container {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 101;
+        }
 
-        footer { text-align: center; padding: 40px; margin-top: 20px; color: var(--text-muted); font-weight: 600; }
+        .settings-button {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.6);
+            /* Анимация вращения при hover */
+            transition: transform 0.5s ease-in-out, background 0.3s;
+        }
 
+        .settings-button:hover {
+            transform: rotate(90deg);
+        }
+
+        .settings-panel {
+            position: absolute;
+            top: 55px; /* Под кнопкой */
+            right: 0;
+            padding: 15px;
+            width: 220px;
+            display: none; /* Скрыт по умолчанию */
+            flex-direction: column;
+            gap: 10px;
+            border-radius: 15px;
+            /* Используем стекло для панели */
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .settings-panel.active {
+            display: flex; /* Показать при активном классе */
+        }
+
+        .settings-panel button {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            text-align: left;
+            opacity: 0.9;
+        }
+
+        .settings-panel button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            opacity: 1;
+        }
+
+        /* --- Адаптивность --- */
         @media (max-width: 900px) {
             .hero { grid-template-columns: 1fr; }
             .main-article { min-height: 400px; }
             .main-article h1 { font-size: 2rem; }
             header { flex-direction: column; gap: 15px; }
+            .settings-container { top: 15px; right: 15px; }
         }
     </style>
 </head>
 <body>
+
+    <div class="settings-container">
+        <button id="settingsToggle" class="settings-button">
+            <i class="fas fa-cog"></i>
+        </button>
+        <div id="settingsPanel" class="settings-panel">
+            <button id="languageToggle"><i class="fas fa-globe"></i> <span id="langText">Язык: RU</span></button>
+            <button id="themeToggle"><i class="fas fa-moon"></i> <span id="themeText">Тема: Тёмная</span></button>
+        </div>
+    </div>
 
     <header class="glass-panel">
         <div class="logo">NEWS <span>Polit 2</span></div>
@@ -210,11 +315,20 @@
     </section>
 
     <footer>
-        <p>News Polit 2 • Design by razeugly<3</p>
+        <p>News Polit 2 • Design by Gemini</p>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const body = document.body;
+            const settingsToggle = document.getElementById('settingsToggle');
+            const settingsPanel = document.getElementById('settingsPanel');
+            const themeToggle = document.getElementById('themeToggle');
+            const langToggle = document.getElementById('languageToggle');
+            const themeText = document.getElementById('themeText');
+            const langText = document.getElementById('langText');
+
+            // 1. Плавный скролл для навигации
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     const href = this.getAttribute('href');
@@ -229,8 +343,52 @@
                     }
                 });
             });
+
+            // 2. Логика открытия/закрытия панели настроек
+            settingsToggle.addEventListener('click', function() {
+                settingsPanel.classList.toggle('active');
+            });
+
+            // Закрытие панели при клике вне ее
+            document.addEventListener('click', function(e) {
+                if (!settingsContainer.contains(e.target) && settingsPanel.classList.contains('active')) {
+                    settingsPanel.classList.remove('active');
+                }
+            });
+
+
+            // 3. Логика переключения ТЕМЫ (Тёмная/Светлая)
+            themeToggle.addEventListener('click', function() {
+                if (body.classList.contains('light-mode')) {
+                    // Переключаемся на ТЕМНУЮ
+                    body.classList.remove('light-mode');
+                    themeText.innerHTML = '<i class="fas fa-moon"></i> Тема: Тёмная';
+                    // Можно сохранить выбор в localStorage, если нужно запоминать тему
+                } else {
+                    // Переключаемся на СВЕТЛУЮ
+                    body.classList.add('light-mode');
+                    themeText.innerHTML = '<i class="fas fa-sun"></i> Тема: Светлая';
+                    // Сохраняем выбор
+                }
+            });
+
+            // 4. Логика переключения ЯЗЫКА (Имитация)
+            let currentLang = 'RU';
+            langToggle.addEventListener('click', function() {
+                if (currentLang === 'RU') {
+                    currentLang = 'EN';
+                    langText.innerHTML = '<i class="fas fa-globe"></i> Language: EN';
+                    alert("Язык изменен на Английский ");
+                    // В реальном проекте здесь нужно обновить весь текстовый контент
+                } else {
+                    currentLang = 'RU';
+                    langText.innerHTML = '<i class="fas fa-globe"></i> Язык: RU';
+                    alert("Language changed to Russian (imitation)");
+                }
+            });
         });
     </script>
     
 </body>
-</html>
+    </html>
+                                                                                
