@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEWS Polit 2 | iOS Style</title>
+    <style>
+        :root {
+            --primary-blue: #007AFF;       /* Классический Apple Blue */
+            --accent-glow: #0A84FF;        /* Светящийся синий */
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            
+            /* Параметры стекла */
+            --glass-bg: rgba(20, 20, 20, 0.65); /* Темный полупрозрачный */
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --blur-amount: 20px;
+            --bubble-radius: 24px;         /* Радиус скругления "пузырей" */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* Фон с градиентами, чтобы было видно "стекло" */
+            background: radial-gradient(circle at 10% 20%, #001a4d 0%, #000000 40%),
+                        radial-gradient(circle at 90% 80%, #002b80 0%, #000000 40%),
+                        #050505;
+            background-attachment: fixed; /* Фон стоит на месте при скролле */
+            color: var(--text-main);
+            /* Системный шрифт Apple (San Francisco) или аналог */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            padding-bottom: 40px;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.2s; }
+
+        /* --- КЛАСС ДЛЯ ЭФФЕКТА СТЕКЛА (GLASS) --- */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount)); /* Для Safari */
+            border: 1px solid var(--glass-border);
+            border-radius: var(--bubble-radius);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        /* --- ШАПКА (Плавающая капсула) --- */
+        header {
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            margin: 0 20px; /* Отступы по бокам */
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900; /* Очень жирный */
+            letter-spacing: -0.5px;
+        }
+
+        .logo span { color: var(--primary-blue); }
+
+        nav ul { display: flex; gap: 25px; }
+        
+        nav a {
+            font-weight: 600;
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+        nav a:hover { opacity: 1; color: var(--primary-blue); }
+
+        /* --- БЕГУЩАЯ СТРОКА (Отдельный пузырь) --- */
+        .ticker-container {
+            margin: 20px;
+            padding: 10px 20px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .ticker-text {
+            white-space: nowrap;
+            animation: ticker 25s linear infinite;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--accent-glow);
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* --- ГЛАВНАЯ СЕКЦИЯ (GRID) --- */
+        .hero {
+            display: grid;
+            grid-template-columns: 2fr 1fr; /* 2 части лево, 1 часть право */
+            gap: 20px;
+            padding: 0 20px;
+        }
+
+        /* Главная новость */
+        .main-article {
+            min-height: 500px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            padding: 40px;
+            /* Картинка на фоне главной новости */
+            background: url('https://source.unsplash.com/random/1200x800/?skyscraper,blue') center/cover no-repeat;
+        }
+
+        /* Затемнение поверх картинки, чтобы текст читался */
+        .main-article::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            z-index: 1;
+        }
+
+        .article-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .tag {
+            background-color: var(--primary-blue);
+            padding: 6px 14px;
+            border-radius: 20px; /* Полная пилюля */
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4);
+        }
+
+        .main-article h1 {
+            font-size: 3rem;
+            font-weight: 900; /* Максимальная жирность */
+            line-height: 1.1;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        .main-article p {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.9);
+            max-width: 80%;
+        }
+
+        /* Боковая панель */
+        .sidebar {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        .news-item {
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .news-item:last-child { border-bottom: none; }
+
+        .news-item h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .news-item span {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* --- НИЖНЯЯ СЕТКА КАРТОЧЕК --- */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            margin-top: 10px;
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+            border-color: var(--primary-blue);
+        }
+
+        .card-img {
+            height: 220px;
+            background-color: #1a1a1a;
+            position: relative;
+        }
+        
+        /* Заглушки-градиенты для картинок */
+        .bg-1 { background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); }
+        .bg-2 { background: linear-gradient(135deg, #000000, #434343); }
+        .bg-3 { background: linear-gradient(135deg, #232526, #414345); }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .card-body h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .card-body p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .btn-read {
+            display: inline-block;
+            color: #fff;
+            background: rgba(255,255,255,0.1);
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        
+        .btn-read:hover {
+            background: var(--primary-blue);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            margin-top: 20px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 900px) {
+            .hero { grid-template-columns: 1fr; }
+            .main-article { min-height: 400px; }
+            .main-article h1 { font-size: 2rem; }
+            header { flex-direction: column; gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="glass-panel">
+        <div class="logo">NEWS <span>Polit 2</span></div>
+        <nav>
+            <ul>
+                <li><a href="#">Главная</a></li>
+                <li><a href="#">Тренды</a></li>
+                <li><a href="#">Политика</a></li>
+                <li><a href="#">Tech</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="ticker-container glass-panel">
+        <div class="ticker-text">
+            Подписавайся на наш новосотной тгк https://t.me/NewsPoIit
+        </div>
+    </div>
+
+    <main class="hero">
+        
+        <article class="main-article glass-panel">
+            <div class="article-content">
+                <span class="tag">Breaking News</span>
+                <h1>Новостей нету</h1>
+                <p></p>
+            </div>
+        </article>
+
+        <aside class="sidebar glass-panel">
+            <h3>В моменте</h3>
+            
+            <div class="news-item">
+                <a href="#">
+                    <h4>Нету новостей</h4>
+                    <span>Только что</span>
+                </a>
+            </div>
+            <div class="news-item">
+                <a href="#">
+                    <h4>Нету новостей</h4>
+                    <span>15 минут назад</span>
+                </a>
+            </div>
+            <div class="news-item">
+                <a href="#">
+                    <h4>Нету новостей</h4>
+                    <span>42 минуты назад</span>
+                </a>
+            </div>
+            <div class="news-item">
+                <a href="#">
+                    <h4>Нету новостей</h4>
+                    <span>1 час назад</span>
+                </a>
+            </div>
+        </aside>
+
+    </main>
+
+    <section class="news-grid">
+        
+        <article class="card glass-panel">
+            <div class="card-img bg-1"></div>
+            <div class="card-body">
+                <span style="color:var(--primary-blue); font-weight:800; font-size:0.8rem;">ТЕХНОЛОГИИ</span>
+                <h3>Не найдено</h3>
+                <p>Не удалось подключиться к серверу</p>
+                <a href="#" class="btn-read">Читать</a>
+            </div>
+        </article>
+
+        <article class="card glass-panel">
+            <div class="card-img bg-2"></div>
+            <div class="card-body">
+                <span style="color:var(--primary-blue); font-weight:800; font-size:0.8rem;">ФИНАНСЫ</span>
+                <h3>Не найдено</h3>
+                <p></p>
+                <a href="#" class="btn-read">Читать</a>
+            </div>
+        </article>
+
+ 
+
+    </section>
+
+    <footer>
+        <p>News Polit 2 • Design by razeugly<3</p>
+    </footer>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
