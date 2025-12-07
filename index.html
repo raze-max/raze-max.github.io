@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>razeugly - Рабочий стол Win11 (Перетаскиваемое Окно)</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+</head>
+<body>
+
+    <div id="preloader">
+        <div class="windows-loader">
+            </div>
+        <p>Загрузка Портфолио...</p>
+    </div>
+    <div id="desktop">
+
+        <div id="social-icon">
+            <span class="material-icons-round">folder_shared</span>
+            <p>Мои соцсети</p>
+        </div>
+        <div id="app-window" class="acrylic-effect hidden">
+            
+            <div class="window-title-bar" id="window-header">
+                <span class="logo">Контакты.exe</span>
+                <div class="window-controls">
+                    <span class="material-icons-round minimize-btn">remove</span>
+                    <span class="material-icons-round">crop_square</span>
+                    <span class="material-icons-round close-btn">close</span>
+                </div>
+            </div>
+
+            <div class="window-content">
+                <h1>Мои контакты и ссылки</h1>
+                <p>Нажмите, чтобы открыть мою страницу на любимой платформе.</p>
+
+                <div class="social-grid">
+                    <a href="https://www.twitch.tv/razeugly" target="_blank" class="social-bubble twitch">
+                        <span class="material-icons-round">videocam</span>Twitch: razeugly
+                    </a>
+                    <a href="https://www.tiktok.com/@razeanaleblan" target="_blank" class="social-bubble tiktok">
+                        <span class="material-icons-round">phone_iphone</span>TikTok: razeanaleblan
+                    </a>
+                    <a href="https://www.instagram.com/zxerocs" target="_blank" class="social-bubble insta">
+                        <span class="material-icons-round">photo_camera</span>Instagram: zxerocs
+                    </a>
+                    <a href="https://steamcommunity.com/id/razeugly" target="_blank" class="social-bubble steam">
+                        <span class="material-icons-round">sports_esports</span>Steam: razeugly
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div id="taskbar" class="mica-effect">
+            <span class="material-icons-round start-btn">window</span>
+            <span id="taskbar-social-item" class="taskbar-item">Контакты</span>
+            <div class="system-icons">
+                <span class="material-icons-round">wifi</span>
+                <span class="material-icons-round">volume_up</span>
+                <span>19:30</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
